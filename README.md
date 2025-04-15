@@ -15,4 +15,7 @@ flask는 jinja2 템플릿 엔진을 사용합니다.
 변수를 가져오는 템플릿은 {{변수명}} 입니다.
 key로 value를 가져올 땐 {{변수명.key}}입니다.
 
-Test push
+# 웹 사이트 접속하기 
+Railway를 활용하여 로컬이 아니여도 접속이 가능하도록 하였다.
+ooad-production.up.railway.app를 통해서 접속이 가능하며
+현재 로그인, 회원가입및 추가적으로 /test, /test2 URL에 덧 붙여 지도 기능을 확인할 수 있다.
