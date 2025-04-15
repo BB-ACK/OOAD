@@ -1,6 +1,3 @@
-# OOAD
-객체지향분석및설계 프로젝트 수행 GIT Repository
-
 # 파일 설명
 1. app.py : 서버
 2. templates 폴더 : html파일들을 모아놓음.

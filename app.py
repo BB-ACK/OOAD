@@ -34,6 +34,14 @@ with app.app_context():
 def index():
     return render_template('index.html')
 
+@app.route('/test')
+def test():
+    return render_template('test.html')
+
+@app.route('/test2')
+def test2():
+    return render_template('test2.html')
+
 # 회원가입 라우트
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -44,7 +52,7 @@ def register():
         # 이미 존재하는 유저인지 확인
         existing_user = User.query.filter_by(username=username).first()
         if existing_user:
-            flash('이미 존재하는 아이디입니다.', 'danger')
+            flash('이미 존재하는 계정입니다.', 'danger')
             return redirect(url_for('register'))
         
         # 비밀번호 해싱 후 저장
@@ -92,7 +100,7 @@ def dashboard():
     return f'환영합니다, {current_user.username}! <a href="/logout">로그아웃</a>'
 
 if __name__=="__main__":
-  app.run(port = 5000, debug=True)
+  app.run(port = 5000, debug=False)
   # host 등을 직접 지정하고 싶다면
   # app.run(host="127.0.0.1", port="5000", debug=True)
 
