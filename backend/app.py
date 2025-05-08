@@ -6,14 +6,16 @@ import os
 from flask_cors import CORS
 from datetime import timedelta
 
-from routes.user import user_bp
+from routes.user import user_bp, home_bp
 
 # .env파일에서 설정 불러오기 by os
 load_dotenv()
 
-#Flask 객체 인스턴스 생성
+#Flask 객체 인스턴스 생성 및 블루프린트 설정
 app = Flask(__name__)
 app.register_blueprint(user_bp, url_prefix="/")
+app.register_blueprint(home_bp, url_prefix="/")
+
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
 
