@@ -18,7 +18,7 @@ App을 컴포넌트로 주어서 처음 시작화면을 App을 렌더링 하게�
 
 ## src/routes
 
-url에서 /login하면 갈 수 있는 실질적 페이지 구조라고 생각
+url에서 /login 등등 하면 갈 수 있는 실질적 페이지 구조라고 생각
 
 ## src/styles
 
