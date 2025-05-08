@@ -1,3 +1,13 @@
+# 로컬에서 실행
+
+리액트를 사용하기 위해 Node.js가 필요
+https://nodejs.org/ko 을 통해서 node.js 설치
+
+    node -v  # Node.js 버전 확인
+    npm -v   # npm 버전 확인
+    npm install react-router-dom # 추가적으로 라우터 설치
+    npm start # 실행할 디렉토리 위치에서 실행
+
 # 파일 구조 설명
 
 src에서 파일 다루기에 src 확인하면 된다
