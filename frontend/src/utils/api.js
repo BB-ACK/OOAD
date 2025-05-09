@@ -24,7 +24,7 @@ export async function loginUser(email, password) {
 
 export async function registerUser(email, username, password, confirmPassword) {
   try {
-    const response = await fetch(`${API_BASE_URL}/register`, {
+    const response = await fetch(`${API_BASE_URL}/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

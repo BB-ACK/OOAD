@@ -33,7 +33,7 @@ function Login() {
     try {
       const response = await loginUser(formData.email, formData.password)
       // 로그인 성공 시 처리
-      alert("로그인 성공! 액세스 토큰: " + response.access_token)
+      alert("로그인 성공!")
       // 여기서 토큰을 저장하거나 다른 작업을 수행할 수 있습니다
       navigate("/") // 홈 또는 대시보드로 리다이렉트
     } catch (error) {
