@@ -6,7 +6,8 @@ import os
 from flask_cors import CORS
 from datetime import timedelta
 
-from routes.user import user_bp, home_bp
+from routes.user import user_bp
+from routes.home import home_bp
 
 # .env파일에서 설정 불러오기 by os
 load_dotenv()
