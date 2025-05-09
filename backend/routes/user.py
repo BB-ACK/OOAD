@@ -9,30 +9,35 @@ user_bp = Blueprint('user', __name__)
 @user_bp.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
+    email = data.get("email")
     username = data.get("username")
     password = data.get("password")
+    passwordCheck = data.get("confirm-password")
 
-    if users_col.find_one({"username": username}):
-        return jsonify(msg="이미 존재하는 사용자입니다"), 400
+    if password != passwordCheck:
+        return jsonify(msg="비밀번호 확인이 틀립니다"), 400
+
+    if users_col.find_one({"email": email}):
+        return jsonify(msg="이미 존재하는 이메일입니다"), 400
     
     hashed_pw = generate_password_hash(password)
-    users_col.insert_one({"username": username, "password": hashed_pw})
+    users_col.insert_one({"email" : email, "username": username, "password": hashed_pw})
     return jsonify(msg="회원가입 성공"), 201
 
 # 로그인 라우트
 @user_bp.route('/login', methods=['GET', 'POST'])
 def login():
     data = request.get_json()
-    username = data.get("username")
+    email = data.get("email")
     password = data.get("password")
 
-    user = users_col.find_one({"username": username})
+    user = users_col.find_one({"email": email})
 
     if user and check_password_hash(user["password"], password):
-        token = create_access_token(identity=username)  # token 발급
-        return jsonify(access_token = token), 200       # token response
+        token = create_access_token(identity=email)  # token 발급
+        return jsonify(access_token=token), 200       # token response
     
-    return jsonify(msg="아이디 또는 비밀번호가 틀립니다"), 401
+    return jsonify(msg="이메일 또는 비밀번호가 틀립니다"), 401
 
 # 보호된 라우트 <-------------- @jwt_required() 추가.
 @user_bp.route('/protected', methods=['GET'])
