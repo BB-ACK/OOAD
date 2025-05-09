@@ -6,7 +6,7 @@ from db import users_col
 user_bp = Blueprint('user', __name__)
 
 # 회원가입
-@user_bp.route('/register', methods=['POST'])
+@user_bp.route('/signup', methods=['POST'])
 def register():
     data = request.get_json()
     email = data.get("email")
