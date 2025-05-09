@@ -7,7 +7,7 @@ user_bp = Blueprint('user', __name__)
 
 # 회원가입
 @user_bp.route('/signup', methods=['POST'])
-def register():
+def signup():
     data = request.get_json()
     email = data.get("email")
     username = data.get("username")
