@@ -1,0 +1,18 @@
+.password-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .forgot-link {
+    font-size: 0.75rem;
+    color: #666;
+    text-decoration: none;
+  }
+  
+  .forgot-link:hover {
+    color: #333;
+    text-decoration: underline;
+  }
+  
