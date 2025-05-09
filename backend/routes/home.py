@@ -5,6 +5,6 @@ from db import users_col
 
 home_bp = Blueprint('home', __name__)
 
-@home_bp.route('/', methods=['GET'])
+@home_bp.route('/home', methods=['GET'])
 def home():
     return jsonify(msg=f"안녕하세요"), 200
