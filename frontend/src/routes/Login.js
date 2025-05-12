@@ -7,6 +7,8 @@ import FormGroup from "../components/FormGroup"
 import Button from "../components/Button"
 import { loginUser } from "../utils/api"
 import "../styles/routes/Login.css"
+// import 부분에 auth 유틸리티 추가
+import { setToken } from "../utils/auth"
 
 function Login() {
   const navigate = useNavigate()
@@ -32,10 +34,11 @@ function Login() {
 
     try {
       const response = await loginUser(formData.email, formData.password)
-      // 로그인 성공 시 처리
-      alert("로그인 성공!")
-      // 여기서 토큰을 저장하거나 다른 작업을 수행할 수 있습니다
-      navigate("/") // 홈 또는 대시보드로 리다이렉트
+      // handleSubmit 함수 내의 로그인 성공 부분을 다음과 같이 수정
+      // 로그인 성공 시 토큰 저장
+      setToken(response.access_token)
+      // 홈으로 리다이렉트
+      navigate("/home")
     } catch (error) {
       setError(error.message)
     } finally {
@@ -60,7 +63,6 @@ function Login() {
             <div className="form-group">
               <div className="password-header">
                 <label htmlFor="password">비밀번호</label>
-      
               </div>
               <input
                 id="password"
