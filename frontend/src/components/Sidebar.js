@@ -17,12 +17,11 @@ function Sidebar() {
   return (
     <div className="sidebar">
       <div className="sidebar-header">
-        <h2 className="sidebar-title">내 앱</h2>
+        <h2 className="sidebar-title">안녕하세요!</h2>
       </div>
       <ul className="sidebar-menu">
-        <li className="sidebar-menu-item">홈</li>
-        <li className="sidebar-menu-item">프로필</li>
-        <li className="sidebar-menu-item">설정</li>
+        <li className="sidebar-menu-item">코스 찾기</li>
+        <li className="sidebar-menu-item">코스 만들기</li>
       </ul>
       <div className="sidebar-footer">
         <button className="logout-button" onClick={handleLogout}>
