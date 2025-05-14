@@ -4,7 +4,7 @@ from db import foods_col
 
 home_bp = Blueprint('home', __name__)
 
-@home_bp.route('/', methods=['POST'])
+@home_bp.route('/home', methods=['POST'])
 # @jwt_required()
 def home():
     data = request.get_json()
