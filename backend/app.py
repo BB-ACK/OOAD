@@ -8,6 +8,7 @@ from datetime import timedelta
 
 from routes.user import user_bp
 from routes.home import home_bp
+from db import insert_seed_data  # seed 함수 import
 
 # .env파일에서 설정 불러오기 by os
 load_dotenv()
@@ -26,7 +27,10 @@ CORS(app, supports_credentials=True)
 # JWT 매니저 초기화
 jwt = JWTManager(app)
 
+# DB 초기데이터 초기화
+
 if __name__=="__main__":
+  insert_seed_data()
   app.run(port = 5000, debug=True)
   # host 등을 직접 지정하고 싶다면
   # app.run(host="127.0.0.1", port="5000", debug=True)
