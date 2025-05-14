@@ -25,7 +25,7 @@ def signup():
     return jsonify(msg="회원가입 성공"), 201
 
 # 로그인 라우트
-@user_bp.route('/login', methods=['GET', 'POST'])
+@user_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
     email = data.get("email")
