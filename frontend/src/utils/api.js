@@ -18,6 +18,7 @@ export async function loginUser(email, password) {
 
     return data
   } catch (error) {
+    console.error("로그인 에러:", error)
     throw error
   }
 }
@@ -37,7 +38,16 @@ export async function registerUser(email, username, password, confirmPassword) {
       }),
     })
 
-    const data = await response.json()
+    // 응답이 JSON이 아닐 경우를 대비한 처리
+    let data
+    const contentType = response.headers.get("content-type")
+    if (contentType && contentType.includes("application/json")) {
+      data = await response.json()
+    } else {
+      const text = await response.text()
+      console.error("JSON이 아닌 응답:", text)
+      throw new Error("서버에서 예상치 못한 응답을 받았습니다.")
+    }
 
     if (!response.ok) {
       throw new Error(data.msg || "회원가입에 실패했습니다.")
@@ -45,6 +55,32 @@ export async function registerUser(email, username, password, confirmPassword) {
 
     return data
   } catch (error) {
+    console.error("회원가입 에러:", error)
+    throw error
+  }
+}
+
+// 장소 데이터 가져오기 함수 추가
+export async function fetchPlaces(accessType, key = "") {
+  try {
+    const response = await fetch(`${API_BASE_URL}/home`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        access_type: accessType,
+        key: key,
+      }),
+    })
+
+    if (!response.ok) {
+      throw new Error("장소 데이터를 가져오는데 실패했습니다.")
+    }
+
+    return await response.json()
+  } catch (error) {
+    console.error("장소 데이터 가져오기 오류:", error)
     throw error
   }
 }
