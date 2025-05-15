@@ -15,6 +15,7 @@ function Home() {
   const mapContainer = useRef(null)
   const map = useRef(null)
   const [places, setPlaces] = useState([])
+  const [searchTerm, setSearchTerm] = useState("")
   const markers = useRef([])
   const infowindows = useRef([])
 
@@ -41,7 +42,7 @@ function Home() {
         map.current = new window.kakao.maps.Map(mapContainer.current, options)
 
         // 지도 로드 후 음식점 데이터 가져오기
-        loadPlaces()
+        loadPlaces("first", "")
       })
     }
 
@@ -54,9 +55,9 @@ function Home() {
   }, [navigate])
 
   // 음식점 데이터 가져오기
-  const loadPlaces = async () => {
+  const loadPlaces = async (accessType, key) => {
     try {
-      const data = await fetchPlaces("first", "")
+      const data = await fetchPlaces(accessType, key)
       setPlaces(data)
 
       // 데이터를 받아온 후 마커 표시
@@ -65,6 +66,26 @@ function Home() {
       }
     } catch (error) {
       console.error("음식점 데이터 가져오기 오류:", error)
+    }
+  }
+
+  // 검색 처리 함수
+  const handleSearch = (e) => {
+    e.preventDefault()
+    if (searchTerm.trim()) {
+      loadPlaces("search", searchTerm.trim())
+    } else {
+      // 검색어가 비어있으면 모든 장소 표시
+      loadPlaces("first", "")
+    }
+  }
+
+  // 검색어 변경 처리 함수
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value)
+    // 검색어가 비어있으면 모든 장소 표시
+    if (e.target.value === "") {
+      loadPlaces("first", "")
     }
   }
 
@@ -146,7 +167,18 @@ function Home() {
       <Sidebar />
       <div className="home-container">
         <div className="home-header">
-          <h1 className="home-title">Feel Good</h1>
+          <div className="header-top">
+            <h1 className="home-title">Feel Good</h1>
+            <form className="search-form" onSubmit={handleSearch}>
+              <input
+                type="text"
+                className="search-input"
+                placeholder="장소명 검색..."
+                value={searchTerm}
+                onChange={handleSearchChange}
+              />
+            </form>
+          </div>
         </div>
         <div className="map-container" ref={mapContainer}></div>
       </div>
