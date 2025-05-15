@@ -22,6 +22,8 @@ def signup():
     
     hashed_pw = generate_password_hash(password)
     users_col.insert_one({"email" : email, "username": username, "password": hashed_pw})
+
+    
     return jsonify(msg="회원가입 성공"), 201
 
 # 로그인 라우트
