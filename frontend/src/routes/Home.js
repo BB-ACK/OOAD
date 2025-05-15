@@ -16,8 +16,16 @@ function Home() {
   const map = useRef(null)
   const [places, setPlaces] = useState([])
   const [searchTerm, setSearchTerm] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState("")
   const markers = useRef([])
   const infowindows = useRef([])
+
+  // 카테고리 목록
+  const categories = [
+    { id: "음식점", name: "맛집", color: "#FF6B6B" },
+    { id: "카페", name: "카페", color: "#4A90E2" },
+    { id: "놀거리", name: "놀거리", color: "#8E44AD" },
+  ]
 
   // 인증 상태 확인 및 카카오맵 초기화
   useEffect(() => {
@@ -72,6 +80,7 @@ function Home() {
   // 검색 처리 함수
   const handleSearch = (e) => {
     e.preventDefault()
+    setSelectedCategory("") // 카테고리 선택 초기화
     if (searchTerm.trim()) {
       loadPlaces("search", searchTerm.trim())
     } else {
@@ -85,7 +94,23 @@ function Home() {
     setSearchTerm(e.target.value)
     // 검색어가 비어있으면 모든 장소 표시
     if (e.target.value === "") {
+      setSelectedCategory("") // 카테고리 선택 초기화
       loadPlaces("first", "")
+    }
+  }
+
+  // 카테고리 필터링 함수
+  const handleCategoryFilter = (category) => {
+    setSearchTerm("") // 검색어 초기화
+
+    if (selectedCategory === category) {
+      // 이미 선택된 카테고리를 다시 클릭하면 필터 해제
+      setSelectedCategory("")
+      loadPlaces("first", "")
+    } else {
+      // 새 카테고리 선택
+      setSelectedCategory(category)
+      loadPlaces("tag", category)
     }
   }
 
@@ -153,13 +178,13 @@ function Home() {
     })
 
     // 모든 마커가 보이도록 지도 범위 재설정
-    if (markers.current.length > 0) {
-      const bounds = new window.kakao.maps.LatLngBounds()
-      markers.current.forEach((marker) => {
-        bounds.extend(marker.getPosition())
-      })
-      map.current.setBounds(bounds)
-    }
+    // if (markers.current.length > 0) {
+    //   const bounds = new window.kakao.maps.LatLngBounds()
+    //   markers.current.forEach((marker) => {
+    //     bounds.extend(marker.getPosition())
+    //   })
+    //   map.current.setBounds(bounds)
+    // }
   }
 
   return (
@@ -181,6 +206,26 @@ function Home() {
           </div>
         </div>
         <div className="map-container" ref={mapContainer}></div>
+
+        {/* 카테고리 필터 버튼 */}
+        <div className="category-filter">
+          <div className="category-buttons">
+            {categories.map((category) => (
+              <button
+                key={category.id}
+                className={`category-button ${selectedCategory === category.id ? "active" : ""}`}
+                style={{
+                  backgroundColor: selectedCategory === category.id ? category.color : "white",
+                  color: selectedCategory === category.id ? "white" : "#333",
+                  borderColor: category.color,
+                }}
+                onClick={() => handleCategoryFilter(category.id)}
+              >
+                {category.name}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
     </>
   )
