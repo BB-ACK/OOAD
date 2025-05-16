@@ -40,18 +40,3 @@ def login():
         return jsonify(access_token=token), 200       # token response
     
     return jsonify(msg="이메일 또는 비밀번호가 틀립니다"), 401
-
-# 보호된 라우트 <-------------- @jwt_required() 추가.
-@user_bp.route('/protected', methods=['GET'])
-@jwt_required()
-def protected():
-    current_user = get_jwt_identity()
-    return jsonify(msg=f"안녕하세요, {current_user}님"), 200
-
-# # 로그아웃 라우트
-# @app.route('/logout')
-# @login_required
-# def logout():
-#     logout_user()
-#     flash('로그아웃되었습니다.', 'info')
-#     return redirect(url_for('login'))
