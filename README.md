@@ -1,5 +1,5 @@
 # BackEnd README
-# backend 파일구조 설명
+## backend 파일구조 설명
 backend 폴더에는 flask 및 db(mongodb), frotend 폴더에는 react 파일을 배치한다.
 
 ## backend 폴더 by backEndManager
@@ -10,7 +10,7 @@ backend 폴더에는 flask 및 db(mongodb), frotend 폴더에는 react 파일을
 - routes/ : flaks 라우트 모음.
 
 # FrontEnd README
-# 로컬에서 실행
+## 로컬에서 실행
 
 리액트를 사용하기 위해 Node.js가 필요
 https://nodejs.org/ko 을 통해서 node.js 설치
@@ -20,7 +20,7 @@ https://nodejs.org/ko 을 통해서 node.js 설치
     npm install react-router-dom # 추가적으로 라우터 설치
     npm start # 실행할 디렉토리 위치에서 실행
 
-# frontend 파일구조 설명
+## frontend 파일구조 설명
 
 src에서 파일 다루기에 src 확인하면 된다
 
@@ -68,3 +68,7 @@ MongoDB를 cmd에서 수동으로 켜고 끄는 명령어는 다음과 같다.
 
     cd frontend
     npm start
+
+# 기타 참조
+## tools/getPoint.py : 위도 경도 얻어오기
+해당 파일 주석 참조할 것.
