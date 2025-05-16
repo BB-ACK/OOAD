@@ -22,9 +22,9 @@ function Home() {
 
   // 카테고리 목록
   const categories = [
-    { id: "음식점", name: "맛집", color: "#FF6B6B" },
-    { id: "카페", name: "카페", color: "#4A90E2" },
-    { id: "놀거리", name: "놀거리", color: "#8E44AD" },
+    { id: "음식점", name: "#맛집", color: "#FF6B6B" },
+    { id: "카페", name: "#카페", color: "#4A90E2" },
+    { id: "놀거리", name: "#놀거리", color: "#8E44AD" },
   ]
 
   // 인증 상태 확인 및 카카오맵 초기화
