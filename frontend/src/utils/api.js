@@ -62,10 +62,18 @@ export async function registerUser(email, username, password, confirmPassword) {
 
 // 장소 데이터 가져오기 함수 추가
 export async function fetchPlaces(accessType, key = "") {
+  // 토큰 가져오기
+  const token = localStorage.getItem("auth_token")
+
+  if (!token) {
+    throw new Error("인증 토큰이 존재하지 않습니다. 로그인 후 이용해 주세요.")
+  }
+
   try {
     const response = await fetch(`${API_BASE_URL}/home`, {
       method: "POST",
       headers: {
+        "Authorization": `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
