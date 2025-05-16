@@ -7,6 +7,8 @@
     left: 0;
     top: 0;
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar-header {
@@ -23,6 +25,7 @@
 .sidebar-menu {
     list-style: none;
     padding: 0;
+    flex-grow: 1;
 }
 
 .sidebar-menu-item {
@@ -36,9 +39,8 @@
 }
 
 .sidebar-footer {
-    position: absolute;
-    bottom: 1rem;
-    width: calc(100% - 2rem);
+    margin-top: auto;
+    width: 100%;
 }
 
 .logout-button {

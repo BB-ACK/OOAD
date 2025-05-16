@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Sidebar from "../components/Sidebar"
+import AddPlaceModal from "../components/AddPlaceModal"
 import { isAuthenticated } from "../utils/auth"
 import { fetchPlaces } from "../utils/api"
 import { restaurantMarkerUrl } from "../assets/marker-restaurant"
@@ -17,6 +18,7 @@ function Home() {
   const [places, setPlaces] = useState([])
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("")
+  const [isAddPlaceModalOpen, setIsAddPlaceModalOpen] = useState(false)
   const markers = useRef([])
   const infowindows = useRef([])
 
@@ -187,9 +189,25 @@ function Home() {
     // }
   }
 
+  // 장소 추가 모달 열기
+  const handleOpenAddPlaceModal = () => {
+    setIsAddPlaceModalOpen(true)
+  }
+
+  // 장소 추가 모달 닫기
+  const handleCloseAddPlaceModal = () => {
+    setIsAddPlaceModalOpen(false)
+  }
+
+  // 장소 추가 완료 후 처리
+  const handlePlaceAdded = () => {
+    // 모든 장소 다시 로드
+    loadPlaces("first", "")
+  }
+
   return (
     <>
-      <Sidebar />
+      <Sidebar onAddPlace={handleOpenAddPlaceModal} />
       <div className="home-container">
         <div className="home-header">
           <div className="header-top">
@@ -227,6 +245,9 @@ function Home() {
           </div>
         </div>
       </div>
+
+      {/* 장소 추가 모달 */}
+      <AddPlaceModal isOpen={isAddPlaceModalOpen} onClose={handleCloseAddPlaceModal} onPlaceAdded={handlePlaceAdded} />
     </>
   )
 }

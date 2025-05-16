@@ -25,7 +25,16 @@ export async function loginUser(email, password) {
 
 export async function registerUser(email, username, password, confirmPassword) {
   try {
-    const response = await fetch(`${API_BASE_URL}/signup`, {
+    // 디버깅을 위한 로그 추가
+    console.log("회원가입 요청 데이터:", {
+      email,
+      username,
+      password,
+      "confirm-password": confirmPassword,
+    })
+    console.log("요청 URL:", `${API_BASE_URL}/register`)
+
+    const response = await fetch(`${API_BASE_URL}/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -89,6 +98,28 @@ export async function fetchPlaces(accessType, key = "") {
     return await response.json()
   } catch (error) {
     console.error("장소 데이터 가져오기 오류:", error)
+    throw error
+  }
+}
+
+// 장소 추가 함수
+export async function addPlace(placeData) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/add_place`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(placeData),
+    })
+
+    if (!response.ok) {
+      throw new Error("장소 추가에 실패했습니다.")
+    }
+
+    return await response.json()
+  } catch (error) {
+    console.error("장소 추가 오류:", error)
     throw error
   }
 }
