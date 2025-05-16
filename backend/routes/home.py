@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
-from db import foods_col
+from db import places_col
 
 home_bp = Blueprint('home', __name__)
 
@@ -12,20 +12,20 @@ def home():
 
     # 최초 접속 시 모든 데이터 주기
     if access_type == 'first':
-        foods = list(foods_col.find({}, {"_id": 0,"place_name": 1, "point": 1, "tags": 1})) # 원하는 필드만 포함해서 가져오기 (1은 포함, 0은 제외 의미)
-        return jsonify(foods), 200
+        places = list(places_col.find({}, {"_id": 0,"place_name": 1, "point": 1, "tags": 1})) # 원하는 필드만 포함해서 가져오기 (1은 포함, 0은 제외 의미)
+        return jsonify(places), 200
 
     # 검색 시 검색어를 뽑아서 DB검색에 사용
     if access_type == 'search':
         key = data.get('key')
-        foods = list(foods_col.find({"place_name": key}, {"_id": 0,"place_name": 1, "point": 1, "tags": 1}))
-        return jsonify(foods), 200
+        places = list(places_col.find({"place_name": key}, {"_id": 0,"place_name": 1, "point": 1, "tags": 1}))
+        return jsonify(places), 200
 
     # TAG 검색 시 tag를 뽑아서 DB검색에 사용.
     if access_type == 'tag':
         key = data.get('key')
-        foods = list(foods_col.find({"tags": key}, {"_id": 0,"place_name": 1, "point": 1, "tags": 1})) # MongDB에서는 리스트형태 필드를 단일값으로 검색 가능함.
-        return jsonify(foods), 200
+        places = list(places_col.find({"tags": key}, {"_id": 0,"place_name": 1, "point": 1, "tags": 1})) # MongDB에서는 리스트형태 필드를 단일값으로 검색 가능함.
+        return jsonify(places), 200
 
     
 # 처음에 마우스 올리면 가게명만 뜨고
