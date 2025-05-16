@@ -105,7 +105,7 @@ export async function fetchPlaces(accessType, key = "") {
 // 장소 추가 함수
 export async function addPlace(placeData) {
   try {
-    const response = await fetch(`${API_BASE_URL}/add_place`, {
+    const response = await fetch(`${API_BASE_URL}/addplace`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

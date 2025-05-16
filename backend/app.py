@@ -8,6 +8,7 @@ from datetime import timedelta
 
 from routes.user import user_bp
 from routes.home import home_bp
+from routes.addplace import addplace_bp
 from db import insert_seed_data  # seed 함수 import
 
 # .env파일에서 설정 불러오기 by os
@@ -17,6 +18,7 @@ load_dotenv()
 app = Flask(__name__)
 app.register_blueprint(user_bp, url_prefix="/")
 app.register_blueprint(home_bp, url_prefix="/")
+app.register_blueprint(addplace_bp, url_prefix="/")
 
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
