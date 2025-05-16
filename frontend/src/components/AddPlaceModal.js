@@ -108,9 +108,11 @@ function AddPlaceModal({ isOpen, onClose, onPlaceAdded }) {
     try {
       const point = await getLatLngFromAddress(formData.address)
       if (point) {
+        const [lat, lng] = point.split(", ")
+
         setFormData((prev) => ({
           ...prev,
-          point: [point], // 배열 형태로 저장
+          point: [lat, lng], // 배열 형태로 저장
         }))
       } else {
         setError("주소를 찾을 수 없습니다.")
