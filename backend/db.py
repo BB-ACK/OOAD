@@ -17,6 +17,7 @@ def insert_seed_data():
     with open("seed_food.json", "r", encoding="utf-8") as f:
         foods = json.load(f)
 
+    foods_col.delete_many({})  # << 기존 데이터 싹 지우고
     for food in foods:
-        if not foods_col.find_one({"place_id": food["place_id"]}):
-            foods_col.insert_one(food)
+        foods_col.insert_one(food)
+        print(f"삽입: {food['place_id']}")

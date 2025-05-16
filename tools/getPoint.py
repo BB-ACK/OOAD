@@ -29,6 +29,6 @@ address = "서울 성북구 동소문로 106 유타빌딩"
 lat, lng = get_lat_lng(address, api_key)
 
 if lat and lng:
-    print(f"\"{lat}, {lng}\"")
+    print(f"\"{lat}\", \"{lng}\"")
 else:
     print("주소를 찾을 수 없습니다.")
