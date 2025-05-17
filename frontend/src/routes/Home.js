@@ -18,15 +18,38 @@ function Home() {
   const [places, setPlaces] = useState([])
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("")
-  const [isAddPlaceModalOpen, setIsAddPlaceModalOpen] = useState(false)
   const markers = useRef([])
   const infowindows = useRef([])
+  const [isAddPlaceModalOpen, setIsAddPlaceModalOpen] = useState(false) 
 
   // 카테고리 목록
   const categories = [
     { id: "음식점", name: "#맛집", color: "#FF6B6B" },
     { id: "카페", name: "#카페", color: "#4A90E2" },
     { id: "놀거리", name: "#놀거리", color: "#8E44AD" },
+    // 음식점 세부 카테고리
+    { id: "한식", name: "#한식", color: "#FF8A80" },
+    { id: "중식", name: "#중식", color: "#FF8A80" },
+    { id: "일식", name: "#일식", color: "#FF8A80" },
+    { id: "양식", name: "#양식", color: "#FF8A80" },
+    { id: "분식", name: "#분식", color: "#FF8A80" },
+    { id: "패스트푸드", name: "#패스트푸드", color: "#FF8A80" },
+    { id: "드링크", name: "#드링크", color: "#FF8A80" },
+    // 카페 세부 카테고리
+    { id: "디저트", name: "#디저트", color: "#82B1FF" },
+    { id: "베이커리", name: "#베이커리", color: "#82B1FF" },
+    { id: "커피", name: "#커피", color: "#82B1FF" },
+    { id: "차", name: "#차", color: "#82B1FF" },
+    // 놀거리 세부 카테고리
+    { id: "영화", name: "#영화", color: "#B39DDB" },
+    { id: "쇼핑", name: "#쇼핑", color: "#B39DDB" },
+    { id: "게임", name: "#게임", color: "#B39DDB" },
+    { id: "공원", name: "#공원", color: "#B39DDB" },
+    { id: "전시회", name: "#전시회", color: "#B39DDB" },
+    { id: "액티비티", name: "#액티비티", color: "#B39DDB" },
+
+    { id: "기타", name: "#기타", color: "#B39DDB" },
+
   ]
 
   // 인증 상태 확인 및 카카오맵 초기화
@@ -180,13 +203,13 @@ function Home() {
     })
 
     // 모든 마커가 보이도록 지도 범위 재설정
-    // if (markers.current.length > 0) {
-    //   const bounds = new window.kakao.maps.LatLngBounds()
-    //   markers.current.forEach((marker) => {
-    //     bounds.extend(marker.getPosition())
-    //   })
-    //   map.current.setBounds(bounds)
-    // }
+    if (markers.current.length > 0) {
+      const bounds = new window.kakao.maps.LatLngBounds()
+      markers.current.forEach((marker) => {
+        bounds.extend(marker.getPosition())
+      })
+      map.current.setBounds(bounds)
+    }
   }
 
   // 장소 추가 모달 열기
