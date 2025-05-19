@@ -30,7 +30,7 @@ function PlaceDetailModal({ isOpen, onClose, placeInfo, onCommentAdded }) {
       // 코멘트 데이터 준비
       const commentData = {
         place_name: placeInfo.place_name,
-        comment: commentText,
+        new_comment: commentText,
       }
 
       // API 호출
