@@ -4,7 +4,7 @@ from db import places_col
 
 selectplace_bp = Blueprint('selectplace', __name__)
 
-@selectplace_bp.route('/selectplace', methods=['GET'])
+@selectplace_bp.route('/selectplace', methods=['POST'])
 @jwt_required()
 def view_place_info():
     data = request.get_json()
