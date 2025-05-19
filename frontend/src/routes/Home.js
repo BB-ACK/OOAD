@@ -209,6 +209,16 @@ function Home() {
 
       markers.current.push(marker)
       infowindows.current.push(infowindow)
+
+    // 모든 마커가 보이도록 지도 범위 재설정
+    if (markers.current.length > 0) {
+      const bounds = new window.kakao.maps.LatLngBounds()
+      markers.current.forEach((marker) => {
+        bounds.extend(marker.getPosition())
+      })
+      map.current.setBounds(bounds)
+    }
+    
     })
   }
 
