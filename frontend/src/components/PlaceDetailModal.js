@@ -51,6 +51,46 @@ function PlaceDetailModal({ isOpen, onClose, placeInfo, onCommentAdded }) {
     }
   }
 
+  // 코멘트 데이터 형식 확인 및 표시 함수
+  const renderComments = () => {
+    if (!placeInfo.comments || placeInfo.comments.length === 0) {
+      return <p className="no-comments">아직 코멘트가 없습니다.</p>
+    }
+
+    return (
+      <div className="comments-container">
+        {placeInfo.comments.map((comment, index) => {
+          // 코멘트가 문자열인 경우
+          if (typeof comment === "string") {
+            return (
+              <div key={index} className="comment-item">
+                <p className="comment-text">{comment}</p>
+              </div>
+            )
+          }
+          // 코멘트가 객체인 경우 (username, date, text 구조)
+          else if (typeof comment === "object") {
+            return (
+              <div key={index} className="comment-item">
+                <div className="comment-header">
+                  {comment.username && <span className="comment-author">{comment.username}</span>}
+                  {comment.date && <span className="comment-date">{comment.date}</span>}
+                </div>
+                <p className="comment-text">{comment.text || comment.comment || JSON.stringify(comment)}</p>
+              </div>
+            )
+          }
+          // 기타 형식의 경우
+          return (
+            <div key={index} className="comment-item">
+              <p className="comment-text">{JSON.stringify(comment)}</p>
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+
   return (
     <div className="modal-overlay">
       <div className="modal-container place-detail-modal">
@@ -104,21 +144,7 @@ function PlaceDetailModal({ isOpen, onClose, placeInfo, onCommentAdded }) {
           {/* 코멘트 섹션 */}
           <div className="detail-section">
             <h3 className="section-title">코멘트</h3>
-            {placeInfo.comments && placeInfo.comments.length > 0 ? (
-              <div className="comments-container">
-                {placeInfo.comments.map((comment, index) => (
-                  <div key={index} className="comment-item">
-                    <div className="comment-header">
-                      <span className="comment-author">{comment.username}</span>
-                      <span className="comment-date">{comment.date}</span>
-                    </div>
-                    <p className="comment-text">{comment.text}</p>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="no-comments">아직 코멘트가 없습니다.</p>
-            )}
+            {renderComments()}
 
             {showCommentForm ? (
               <div className="comment-form-container">
