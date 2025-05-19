@@ -165,7 +165,7 @@ export async function selectplace(placename) {
 }
 
 // 장소 코멘트 등록함수 
-export async function addcomment(comment) {
+export async function addcomment(placecomment) {
   // 토큰 가져오기
   const token = localStorage.getItem("auth_token")
 
@@ -174,13 +174,13 @@ export async function addcomment(comment) {
   }
   
   try {
-    const response = await fetch(`${API_BASE_URL}/addcomment`, {
-      method: "POST",
+    const response = await fetch(`${API_BASE_URL}/selectplace/comment`, {
+      method: "PUT",
       headers: {
         "Authorization": `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(comment),
+      body: JSON.stringify(placecomment),
     })
     
     if (!response.ok) {
