@@ -1,6 +1,8 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
 from db import places_col
+import json
+from pathlib import Path # 경로 표현을 위한 라이브러리
 
 selectplace_bp = Blueprint('selectplace', __name__)
 
@@ -41,6 +43,23 @@ def update_comment():
     result = places_col.update_one({"place_name" : key}, {"$push": {"comments": new_comment}})
 
     if result.modified_count == 1:  # update_one으로 변경 시 modified_count는 1이 됨.
+
+        # seed_places에 반영
+        current_path = Path(__file__).resolve()# 현재 파일 위치 (my_script.py 기준)
+        parent_path = current_path.parents[1] # 상위 폴더로 한 칸 이동 (routes → backend)
+        target_file = parent_path / 'seed_places.json' # 접근하려는 파일 경로
+
+        with open(target_file, 'r', encoding='utf-8') as f:
+            current_places = json.load(f)
+
+        for place in current_places:
+            if place.get("place_name") == key:
+                place["comments"].append(new_comment)
+                break
+
+        with open(target_file, 'w', encoding='utf-8') as f:
+            json.dump(current_places, f, ensure_ascii=False, indent=2, separators=(',', ': '))
+
         return jsonify(new_comment), 200
     
     return jsonify(msg="잘못된 접근입니다"), 400
