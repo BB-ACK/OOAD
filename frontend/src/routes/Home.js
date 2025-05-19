@@ -4,8 +4,9 @@ import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Sidebar from "../components/Sidebar"
 import AddPlaceModal from "../components/AddPlaceModal"
+import PlaceDetailModal from "../components/PlaceDetailModal"
 import { isAuthenticated } from "../utils/auth"
-import { fetchPlaces } from "../utils/api"
+import { fetchPlaces, selectplace } from "../utils/api"
 import { restaurantMarkerUrl } from "../assets/marker-restaurant"
 import { cafeMarkerUrl } from "../assets/marker-cafe"
 import { entertainmentMarkerUrl } from "../assets/marker-entertainment"
@@ -20,7 +21,9 @@ function Home() {
   const [selectedCategory, setSelectedCategory] = useState("")
   const markers = useRef([])
   const infowindows = useRef([])
-  const [isAddPlaceModalOpen, setIsAddPlaceModalOpen] = useState(false) 
+  const [isAddPlaceModalOpen, setIsAddPlaceModalOpen] = useState(false)
+  const [isPlaceDetailModalOpen, setIsPlaceDetailModalOpen] = useState(false)
+  const [selectedPlaceInfo, setSelectedPlaceInfo] = useState(null)
 
   // 카테고리 목록
   const categories = [
@@ -192,24 +195,21 @@ function Home() {
       })
 
       // 마커 클릭 이벤트 등록
-      window.kakao.maps.event.addListener(marker, "click", () => {
-        // 클릭 시 상세 정보 표시 (추후 구현)
-        const tags = place.tags ? place.tags.join(", ") : ""
-        alert(`${place.place_name}\n카테고리: ${tags}`)
+      window.kakao.maps.event.addListener(marker, "click", async () => {
+        try {
+          // 장소명으로 상세 정보 가져오기
+          const placeInfo = await selectplace({ place_name: place.place_name })
+          setSelectedPlaceInfo(placeInfo)
+          setIsPlaceDetailModalOpen(true)
+        } catch (error) {
+          console.error("장소 정보 가져오기 오류:", error)
+          alert("장소 정보를 가져오는데 실패했습니다.")
+        }
       })
 
       markers.current.push(marker)
       infowindows.current.push(infowindow)
     })
-
-    // 모든 마커가 보이도록 지도 범위 재설정
-    if (markers.current.length > 0) {
-      const bounds = new window.kakao.maps.LatLngBounds()
-      markers.current.forEach((marker) => {
-        bounds.extend(marker.getPosition())
-      })
-      map.current.setBounds(bounds)
-    }
   }
 
   // 장소 추가 모달 열기
@@ -226,6 +226,11 @@ function Home() {
   const handlePlaceAdded = () => {
     // 모든 장소 다시 로드
     loadPlaces("first", "")
+  }
+
+  // 장소 상세 모달 닫기
+  const handleClosePlaceDetailModal = () => {
+    setIsPlaceDetailModalOpen(false)
   }
 
   return (
@@ -271,6 +276,12 @@ function Home() {
 
       {/* 장소 추가 모달 */}
       <AddPlaceModal isOpen={isAddPlaceModalOpen} onClose={handleCloseAddPlaceModal} onPlaceAdded={handlePlaceAdded} />
+      {/* 장소 상세 정보 모달 */}
+      <PlaceDetailModal
+        isOpen={isPlaceDetailModalOpen}
+        onClose={handleClosePlaceDetailModal}
+        placeInfo={selectedPlaceInfo}
+      />
     </>
   )
 }
