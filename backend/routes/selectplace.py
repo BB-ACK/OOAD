@@ -14,7 +14,7 @@ def view_place_info():
 
     key = data.get("place_name")
 
-    ret_place = list(places_col.find({"place_name": key}, {"_id": 0,"place_name": 1, "tags": 1, "address": 1, "menu": 1, "description": 1, "comment": 1})) # 원하는 필드만 포함해서 가져오기 (1은 포함, 0은 제외 의미)
+    ret_place = list(places_col.find({"place_name": key}, {"_id": 0,"place_name": 1, "tags": 1, "address": 1, "menu": 1, "description": 1, "comments": 1})) # 원하는 필드만 포함해서 가져오기 (1은 포함, 0은 제외 의미)
     if ret_place:
         return jsonify(ret_place), 200
     
@@ -38,7 +38,7 @@ def update_comment():
     # upsert	조건에 맞는 문서가 없을 경우 새로 만들지 여부 (기본값은 False)
     # update에서 우리는 리스트의 추가이므로 $push를 사용함.
     # 잠재적 문제점 : comment는 제한이 없이 늘어날 수 있음. 테이블 용량 문제 야기 -> 따로 테이블을 분리해야할 수 있음
-    result = places_col.update_one({"place_name" : key}, {"$push": {"comment": new_comment}})
+    result = places_col.update_one({"place_name" : key}, {"$push": {"comments": new_comment}})
 
     if result.modified_count == 1:  # update_one으로 변경 시 modified_count는 1이 됨.
         return jsonify(new_comment), 200
