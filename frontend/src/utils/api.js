@@ -32,9 +32,9 @@ export async function registerUser(email, username, password, confirmPassword) {
       password,
       "confirm-password": confirmPassword,
     })
-    console.log("요청 URL:", `${API_BASE_URL}/register`)
+    console.log("요청 URL:", `${API_BASE_URL}/signup`)
 
-    const response = await fetch(`${API_BASE_URL}/register`, {
+    const response = await fetch(`${API_BASE_URL}/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -129,4 +129,68 @@ export async function addPlace(placeData) {
     console.error("장소 추가 오류:", error)
     throw error
   }
+}
+
+// 장소 클릭시 해당 장소 데이터 가져오기
+export async function selectplace(placename) {
+  // 토큰 가져오기
+  const token = localStorage.getItem("auth_token")
+
+  if (!token) {
+    throw new Error("인증 토큰이 존재하지 않습니다. 로그인 후 이용해 주세요.")
+  }
+  
+  try {
+    const response = await fetch(`${API_BASE_URL}/selectplace`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(placename),
+    })
+    
+    if (!response.ok) {
+      throw new Error("장소 확인에 실패했습니다.")
+    }
+
+    const data = await response.json()
+    
+    return data[0] || null
+  } catch(error) {
+    console.log("장소 확인에 실패했습니다.", error)
+    throw error
+  }
+
+}
+
+// 장소 코멘트 등록함수 
+export async function addcomment(comment) {
+  // 토큰 가져오기
+  const token = localStorage.getItem("auth_token")
+
+  if (!token) {
+    throw new Error("인증 토큰이 존재하지 않습니다. 로그인 후 이용해 주세요.")
+  }
+  
+  try {
+    const response = await fetch(`${API_BASE_URL}/addcomment`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(comment),
+    })
+    
+    if (!response.ok) {
+      throw new Error("코멘트 등록에 실패했습니다.")
+    }
+
+    return await response.json()
+  } catch(error) {
+    console.log("코멘트 등록에 실패했습니다.", error)
+    throw error
+  }
+
 }
