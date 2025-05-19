@@ -1,8 +1,55 @@
 "use client"
+import { useState } from "react"
 import "../styles/components/PlaceDetailModal.css"
+import { addcomment } from "../utils/api"
 
-function PlaceDetailModal({ isOpen, onClose, placeInfo }) {
+function PlaceDetailModal({ isOpen, onClose, placeInfo, onCommentAdded }) {
+  const [commentText, setCommentText] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState("")
+  const [showCommentForm, setShowCommentForm] = useState(false)
+
   if (!isOpen || !placeInfo) return null
+
+  const handleCommentChange = (e) => {
+    setCommentText(e.target.value)
+  }
+
+  const handleSubmitComment = async (e) => {
+    e.preventDefault()
+
+    if (!commentText.trim()) {
+      setError("코멘트를 입력해주세요.")
+      return
+    }
+
+    setIsSubmitting(true)
+    setError("")
+
+    try {
+      // 코멘트 데이터 준비
+      const commentData = {
+        place_name: placeInfo.place_name,
+        comment: commentText,
+      }
+
+      // API 호출
+      const response = await addcomment(commentData)
+
+      // 성공 시 폼 초기화 및 UI 업데이트
+      setCommentText("")
+      setShowCommentForm(false)
+
+      // 부모 컴포넌트에 코멘트 추가 알림
+      if (onCommentAdded) {
+        onCommentAdded(response)
+      }
+    } catch (error) {
+      setError(error.message || "코멘트 등록에 실패했습니다.")
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   return (
     <div className="modal-overlay">
@@ -72,7 +119,40 @@ function PlaceDetailModal({ isOpen, onClose, placeInfo }) {
             ) : (
               <p className="no-comments">아직 코멘트가 없습니다.</p>
             )}
-            <button className="add-comment-button">코멘트 추가</button>
+
+            {showCommentForm ? (
+              <div className="comment-form-container">
+                {error && <div className="error-message">{error}</div>}
+                <form onSubmit={handleSubmitComment}>
+                  <textarea
+                    className="comment-textarea"
+                    placeholder="코멘트를 입력하세요..."
+                    value={commentText}
+                    onChange={handleCommentChange}
+                  />
+                  <div className="comment-form-actions">
+                    <button
+                      type="button"
+                      className="cancel-comment-button"
+                      onClick={() => {
+                        setShowCommentForm(false)
+                        setCommentText("")
+                        setError("")
+                      }}
+                    >
+                      취소
+                    </button>
+                    <button type="submit" className="submit-comment-button" disabled={isSubmitting}>
+                      {isSubmitting ? "등록 중..." : "등록하기"}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            ) : (
+              <button className="add-comment-button" onClick={() => setShowCommentForm(true)}>
+                코멘트 추가
+              </button>
+            )}
           </div>
         </div>
       </div>
