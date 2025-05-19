@@ -21,7 +21,7 @@ function Home() {
   const [selectedCategory, setSelectedCategory] = useState("")
   const markers = useRef([])
   const infowindows = useRef([])
-  const [isAddPlaceModalOpen, setIsAddPlaceModalOpen] = useState(false)
+  const [isAddPlaceModalOpen, setIsAddPlaceModalOpen] = useState(false) // Declare the variable here
   const [isPlaceDetailModalOpen, setIsPlaceDetailModalOpen] = useState(false)
   const [selectedPlaceInfo, setSelectedPlaceInfo] = useState(null)
 
@@ -209,6 +209,16 @@ function Home() {
 
       markers.current.push(marker)
       infowindows.current.push(infowindow)
+
+    // 모든 마커가 보이도록 지도 범위 재설정
+    if (markers.current.length > 0) {
+      const bounds = new window.kakao.maps.LatLngBounds()
+      markers.current.forEach((marker) => {
+        bounds.extend(marker.getPosition())
+      })
+      map.current.setBounds(bounds)
+    }
+    
     })
   }
 
@@ -281,6 +291,15 @@ function Home() {
         isOpen={isPlaceDetailModalOpen}
         onClose={handleClosePlaceDetailModal}
         placeInfo={selectedPlaceInfo}
+        onCommentAdded={async (response) => {
+          // 코멘트가 추가된 후 장소 정보 다시 가져오기
+          try {
+            const updatedPlaceInfo = await selectplace({ place_name: selectedPlaceInfo.place_name })
+            setSelectedPlaceInfo(updatedPlaceInfo)
+          } catch (error) {
+            console.error("장소 정보 업데이트 오류:", error)
+          }
+        }}
       />
     </>
   )
