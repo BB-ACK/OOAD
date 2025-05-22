@@ -14,6 +14,10 @@ function Sidebar({ onAddPlace }) {
     navigate("/login")
   }
 
+  const handleCourseClick = () => {
+    navigate("/course")
+  }
+
   return (
     <div className="sidebar">
       <div className="sidebar-header">
@@ -23,7 +27,9 @@ function Sidebar({ onAddPlace }) {
         <li className="sidebar-menu-item" onClick={onAddPlace}>
           장소 추가
         </li>
-        <li className="sidebar-menu-item">코스 찾기</li>
+        <li className="sidebar-menu-item" onClick={handleCourseClick}>
+          코스 찾기
+        </li>
         <li className="sidebar-menu-item">코스 만들기</li>
       </ul>
       <div className="sidebar-footer">
