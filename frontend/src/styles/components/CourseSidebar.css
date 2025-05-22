@@ -1,0 +1,42 @@
+.sidebar-menu-divider {
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 0.75rem 0;
+}
+
+.sidebar-menu-label {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0.75rem 0;
+    padding-left: 0.5rem;
+}
+
+.course-item {
+    padding-left: 1rem;
+    position: relative;
+}
+
+.course-item:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #3498db;
+}
+
+.course-item:hover {
+    background-color: rgba(52, 152, 219, 0.2);
+    border-radius: 4px;
+}
+
+.no-courses {
+    color: rgba(255, 255, 255, 0.5);
+    font-style: italic;
+    padding-left: 1rem;
+    cursor: default;
+}
+
+.no-courses:hover {
+    color: rgba(255, 255, 255, 0.5);
+}
