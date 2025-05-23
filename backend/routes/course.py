@@ -20,7 +20,9 @@ def course_page():
     course_info = courses_col.find_one({"course_name" : key}, {"_id": 0, "course_name": 1,  "place_list": 1, "description": 1, "cost": 1}) # 원하는 필드만 포함해서 가져오기 (1은 포함, 0은 제외 의미)
     place_list = course_info.get("place_list", [])
     # MongoDB 연산 $in : MongoDB에서 특정 필드가 주어진 리스트 내의 값 중 하나와 일치하는 문서를 찾고 싶을 때 사용
-    raw_points = list(places_col.find({"place_name" : {"$in": place_list}}, {"_id" : 0, "point" : 1}))
+    raw_points = []
+    for place in place_list:
+        raw_points.append(places_col.find_one({"place_name" : place}, {"_id" : 0, "point" : 1}))
 
     # 변환: ["37.592", "127.01"] → {"lat": 37.592, "lng": 127.01}
     converted_points = []
@@ -29,7 +31,7 @@ def course_page():
         if len(point) == 2:
             lat, lng = map(float, point)
             converted_points.append({"lat": lat, "lng": lng})
-
+            
     return jsonify({
         "course_info": course_info,
         "points": converted_points
