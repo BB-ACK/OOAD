@@ -30,7 +30,6 @@ function Sidebar({ onAddPlace }) {
         <li className="sidebar-menu-item" onClick={handleCourseClick}>
           코스 찾기
         </li>
-        <li className="sidebar-menu-item">코스 만들기</li>
       </ul>
       <div className="sidebar-footer">
         <button className="logout-button" onClick={handleLogout}>
