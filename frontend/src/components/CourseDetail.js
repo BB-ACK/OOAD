@@ -31,7 +31,9 @@ function CourseDetail({ course }) {
                   <p className="place-description">
                     {typeof place === "object" && place.description
                       ? place.description
-                      : `${typeof place === "string" ? place : place.place_name}에 대한 설명입니다.`}
+                      : typeof place === "string"
+                        ? `${place}에 대한 설명입니다.`
+                        : `${place.place_name}에 대한 설명입니다.`}
                   </p>
                   {typeof place === "object" && place.tags && place.tags.length > 0 && (
                     <div className="place-tags">
