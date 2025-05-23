@@ -228,3 +228,34 @@ export async function fetchCourses(accessType, key ="") {
   }
 
 }
+
+// 코스 데이터 추가하기
+export async function addcourse(courseData) {
+  // 토큰 가져오기
+  const token = localStorage.getItem("auth_token")
+
+  if (!token) {
+    throw new Error("인증 토큰이 존재하지 않습니다. 로그인 후 이용해 주세요.")
+  }
+  
+  try {
+    const response = await fetch(`${API_BASE_URL}/addcourse`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(courseData),
+    })
+
+    if(!response.ok) {
+      throw new Error("장소 데이터를 추가하는데 실패했습니다.")
+    }
+
+    return await response.json()
+  } catch(error) {
+    console.log("장소 추가 에러", error)
+    throw error
+  }
+
+}
