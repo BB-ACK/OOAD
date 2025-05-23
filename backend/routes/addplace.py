@@ -8,7 +8,7 @@ addplace_bp = Blueprint('addplace', __name__)
 
 @addplace_bp.route('/addplace', methods=['POST'])
 @jwt_required()
-def add():
+def add_place():
     data = request.get_json()
     place_name = data.get("place_name")
     address = data.get("address")
