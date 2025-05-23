@@ -62,12 +62,34 @@ function Course() {
         // 첫 로드 시 코스 목록만 설정
         setCourses(data)
       } else if (accessType === "select") {
-        // 코스 선택 시 해당 코스 정보 설정
-        setSelectedCourse(data)
+        // 백엔드 응답 구조에 맞게 데이터 파싱
+        if (data.course_info) {
+          const courseData = {
+            course_name: data.course_info.course_name,
+            description: data.course_info.description,
+            cost: data.course_info.cost,
+            place_list: data.course_info.place_list.map((placeName, index) => ({
+              place_name: placeName,
+              point:
+                data.points[index] && data.points[index].lat && data.points[index].lng
+                  ? [data.points[index].lat, data.points[index].lng]
+                  : null,
+              description: `${placeName}에 대한 설명입니다.`, // 기본 설명
+              tags: [], // 기본 빈 태그 배열
+            })),
+          }
 
-        // 선택된 코스의 장소들을 지도에 표시
-        if (map.current && data.place_list && data.place_list.length > 0) {
-          displayCourseOnMap(data.place_list)
+          setSelectedCourse(courseData)
+
+          // 유효한 좌표가 있는 장소들만 지도에 표시
+          const validPlaces = courseData.place_list.filter((place) => place.point !== null)
+          if (map.current && validPlaces.length > 0) {
+            displayCourseOnMap(validPlaces)
+          } else {
+            console.warn("표시할 수 있는 유효한 좌표가 없습니다.")
+            // 좌표가 없는 경우 지도 초기화
+            clearMapObjects()
+          }
         }
       }
     } catch (error) {
@@ -95,7 +117,16 @@ function Course() {
         return
       }
 
-      const position = new window.kakao.maps.LatLng(place.point[0], place.point[1])
+      // 좌표 값이 유효한지 확인
+      const lat = Number.parseFloat(place.point[0])
+      const lng = Number.parseFloat(place.point[1])
+
+      if (isNaN(lat) || isNaN(lng)) {
+        console.error("Invalid coordinates for place:", place)
+        return
+      }
+
+      const position = new window.kakao.maps.LatLng(lat, lng)
       linePath.push(position) // 경로에 좌표 추가
 
       // 마커 이미지 설정 - 순서를 표시하는 번호 이미지
@@ -136,7 +167,7 @@ function Course() {
       infowindows.current.push(infowindow)
     })
 
-    // 경로 선 그리기
+    // 경로 선 그리기 (유효한 좌표가 2개 이상일 때만)
     if (linePath.length > 1) {
       polyline.current = new window.kakao.maps.Polyline({
         path: linePath,
@@ -150,7 +181,7 @@ function Course() {
     }
 
     // 모든 마커가 보이도록 지도 범위 재설정
-    if (markers.current.length > 0) {
+    if (linePath.length > 0) {
       const bounds = new window.kakao.maps.LatLngBounds()
       linePath.forEach((position) => {
         bounds.extend(position)

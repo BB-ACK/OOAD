@@ -11,12 +11,12 @@ function CourseDetail({ course }) {
         <h2 className="course-name">{course.course_name}</h2>
         <div className="course-cost">
           <span className="cost-label">예상 비용:</span>
-          <span className="cost-value">{course.cost}</span>
+          <span className="cost-value">{course.cost ? `${course.cost}원` : "정보 없음"}</span>
         </div>
       </div>
 
       <div className="course-description">
-        <p>{course.description}</p>
+        <p>{course.description || "코스 설명이 없습니다."}</p>
       </div>
 
       <div className="course-places">
@@ -27,15 +27,24 @@ function CourseDetail({ course }) {
               <div key={index} className="place-item">
                 <div className="place-order">{index + 1}</div>
                 <div className="place-content">
-                  <h4 className="place-name">{place.place_name}</h4>
-                  <p className="place-description">{place.description || "설명이 없습니다."}</p>
-                  {place.tags && place.tags.length > 0 && (
+                  <h4 className="place-name">{typeof place === "string" ? place : place.place_name}</h4>
+                  <p className="place-description">
+                    {typeof place === "object" && place.description
+                      ? place.description
+                      : `${typeof place === "string" ? place : place.place_name}에 대한 설명입니다.`}
+                  </p>
+                  {typeof place === "object" && place.tags && place.tags.length > 0 && (
                     <div className="place-tags">
                       {place.tags.map((tag, tagIndex) => (
                         <span key={tagIndex} className="place-tag">
                           #{tag}
                         </span>
                       ))}
+                    </div>
+                  )}
+                  {typeof place === "object" && place.point === null && (
+                    <div className="place-warning">
+                      <span style={{ color: "#ff6b6b", fontSize: "0.8rem" }}>⚠️ 위치 정보가 없습니다</span>
                     </div>
                   )}
                 </div>
