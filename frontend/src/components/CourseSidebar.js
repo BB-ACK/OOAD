@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { removeToken } from "../utils/auth"
 import "../styles/components/CourseSidebar.css"
 
-function CourseSidebar({ courses, onCourseSelect }) {
+function CourseSidebar({ courses, onCourseSelect, onAddCourse }) {
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -26,6 +26,9 @@ function CourseSidebar({ courses, onCourseSelect }) {
       <ul className="sidebar-menu">
         <li className="sidebar-menu-item" onClick={handleHomeClick}>
           홈으로 돌아가기
+        </li>
+        <li className="sidebar-menu-item" onClick={onAddCourse}>
+          코스 추가
         </li>
         <li className="sidebar-menu-divider"></li>
         <li className="sidebar-menu-label">추천 코스</li>
