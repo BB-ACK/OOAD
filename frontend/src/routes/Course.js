@@ -74,7 +74,8 @@ function Course() {
                 data.points[index] && data.points[index].lat && data.points[index].lng
                   ? [data.points[index].lat, data.points[index].lng]
                   : null,
-              description: `${placeName}에 대한 설명입니다.`, // 기본 설명
+              description:
+                data.place_desc && data.place_desc[index] ? data.place_desc[index] : `${placeName}에 대한 설명입니다.`, // 백엔드에서 받은 설명 사용
               tags: [], // 기본 빈 태그 배열
             })),
           }
