@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import CourseSidebar from "../components/CourseSidebar"
 import CourseDetail from "../components/CourseDetail"
+import AddCourseModal from "../components/AddCourseModal"
 import { isAuthenticated } from "../utils/auth"
 import { fetchCourses } from "../utils/api"
 import "../styles/routes/Course.css"
@@ -14,6 +15,7 @@ function Course() {
   const map = useRef(null)
   const [courses, setCourses] = useState([])
   const [selectedCourse, setSelectedCourse] = useState(null)
+  const [isAddCourseModalOpen, setIsAddCourseModalOpen] = useState(false)
   const markers = useRef([])
   const infowindows = useRef([])
   const polyline = useRef(null)
@@ -101,6 +103,22 @@ function Course() {
   // 코스 선택 처리
   const handleCourseSelect = (courseName) => {
     loadCourses("select", courseName)
+  }
+
+  // 코스 추가 모달 열기
+  const handleOpenAddCourseModal = () => {
+    setIsAddCourseModalOpen(true)
+  }
+
+  // 코스 추가 모달 닫기
+  const handleCloseAddCourseModal = () => {
+    setIsAddCourseModalOpen(false)
+  }
+
+  // 코스 추가 완료 후 처리
+  const handleCourseAdded = () => {
+    // 모든 코스 다시 로드
+    loadCourses("first", "")
   }
 
   // 지도에 코스 표시 함수
@@ -210,7 +228,7 @@ function Course() {
 
   return (
     <>
-      <CourseSidebar courses={courses} onCourseSelect={handleCourseSelect} />
+      <CourseSidebar courses={courses} onCourseSelect={handleCourseSelect} onAddCourse={handleOpenAddCourseModal} />
       <div className="course-container">
         <div className="course-header">
           <h1 className="course-title">코스 추천</h1>
@@ -227,6 +245,13 @@ function Course() {
           </div>
         )}
       </div>
+
+      {/* 코스 추가 모달 */}
+      <AddCourseModal
+        isOpen={isAddCourseModalOpen}
+        onClose={handleCloseAddCourseModal}
+        onCourseAdded={handleCourseAdded}
+      />
     </>
   )
 }
