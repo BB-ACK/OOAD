@@ -1,8 +1,8 @@
-const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
+
 
 export async function loginUser(email, password) {
   try {
-    const response = await fetch(`${REACT_APP_API_URL}/login`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,9 +32,9 @@ export async function registerUser(email, username, password, confirmPassword) {
       password,
       "confirm-password": confirmPassword,
     })
-    console.log("요청 URL:", `${REACT_APP_API_URL}/signup`)
+    console.log("요청 URL:", `${process.env.REACT_APP_API_URL}/signup`)
 
-    const response = await fetch(`${REACT_APP_API_URL}/signup`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -79,7 +79,7 @@ export async function fetchPlaces(accessType, key = "") {
   }
 
   try {
-    const response = await fetch(`${REACT_APP_API_URL}/home`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/home`, {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -111,7 +111,7 @@ export async function addPlace(placeData) {
     throw new Error("인증 토큰이 존재하지 않습니다. 로그인 후 이용해 주세요.")
   }
   try {
-    const response = await fetch(`${REACT_APP_API_URL}/addplace`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/addplace`, {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -141,7 +141,7 @@ export async function selectplace(placename) {
   }
   
   try {
-    const response = await fetch(`${REACT_APP_API_URL}/selectplace`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/selectplace`, {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -174,7 +174,7 @@ export async function addcomment(placecomment) {
   }
   
   try {
-    const response = await fetch(`${REACT_APP_API_URL}/selectplace/comment`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/selectplace/comment`, {
       method: "PUT",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -205,7 +205,7 @@ export async function fetchCourses(accessType, key ="") {
   }
 
   try {
-    const response = await fetch(`${REACT_APP_API_URL}/course`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/course`, {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -239,7 +239,7 @@ export async function addcourse(courseData) {
   }
   
   try {
-    const response = await fetch(`${REACT_APP_API_URL}/addcourse`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/addcourse`, {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${token}`,
