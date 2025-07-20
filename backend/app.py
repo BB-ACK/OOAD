@@ -33,14 +33,14 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
 
 # Render 대시보드에서 REACT_APP_ORIGIN 환경 변수로 Vercel 앱의 URL을 설정해야 합니다.
 # 예: Key: REACT_APP_ORIGIN, Value: https://your-react-app.vercel.app
-REACT_APP_ORIGIN = os.environ.get('REACT_APP_ORIGIN')
+ORIGIN = os.environ.get('ORIGIN')
 
 if app.debug: # 로컬 개발 환경
     # 개발 중에는 모든 출처 허용 (디버깅 편의성 위주)
     CORS(app, supports_credentials=True)
-elif REACT_APP_ORIGIN: # 프로덕션 환경에서 REACT_APP_ORIGIN이 설정된 경우
+elif ORIGIN: # 프로덕션 환경에서 REACT_APP_ORIGIN이 설정된 경우
     # Vercel에 배포된 React 앱의 URL만 허용
-    CORS(app, origins=REACT_APP_ORIGIN, supports_credentials=True)
+    CORS(app, origins=ORIGIN, supports_credentials=True)
 else: # 프로덕션 환경인데 REACT_APP_ORIGIN이 설정 안 된 경우 (경고 또는 오류 처리)
     print("WARNING: REACT_APP_ORIGIN environment variable not set for production CORS. CORS might not work as expected or be too permissive.")
     # 보안을 위해 이 경우 차단하거나, 최소한의 기능만 허용하도록 설정
