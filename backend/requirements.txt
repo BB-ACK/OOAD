@@ -27,7 +27,6 @@ MarkupSafe==3.0.2
 packaging==24.2
 pydantic==2.10.6
 pydantic_core==2.27.2
-pyjnius==1.6.1
 PyJWT==2.10.1
 pymongo==4.12.1
 pyparsing==3.2.3
