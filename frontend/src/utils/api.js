@@ -1,4 +1,4 @@
-import REACT_APP_API_URL from ".../env"
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
 export async function loginUser(email, password) {
   try {
