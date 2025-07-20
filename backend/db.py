@@ -1,11 +1,11 @@
 # MongoDB 연결
 from pymongo import MongoClient
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import json
 import os
 
-# .env파일에서 설정 불러오기 by os
-load_dotenv()
+# # .env파일에서 설정 불러오기 by os
+# load_dotenv()
 
 client = MongoClient(os.getenv('MONGODB_URI'))
 db = client["feelGood"] # feelGood 이라는 이름의 데이터베이스 가져오기(없으면 생성)

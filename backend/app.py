@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_jwt_extended import JWTManager
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import os
 
 from flask_cors import CORS
@@ -14,7 +14,8 @@ from routes.course import course_bp
 from db import insert_seed_data  # seed 함수 import
 
 # .env파일에서 설정 불러오기 by os
-load_dotenv()
+## 개발환경에서만 필요.
+# load_dotenv()
 
 #Flask 객체 인스턴스 생성 및 블루프린트 설정
 app = Flask(__name__)
