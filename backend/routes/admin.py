@@ -1,19 +1,21 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from db import places_col, places_temporary
+import os
 
 # 임시 db의 장소들을 보여주는 페이지.
 
 admin_bp = Blueprint('admin', __name__)
 
-TARGET_USER_ID = "admin"
+TARGET_USER_ID_1 = os.getenv('ADMIN1') # 환경변수에서 어드민 아이디 불러오기
+TARGET_USER_ID_2 = os.getenv('ADMIN2') # 환경변수에서 어드민 아이디 불러오기
 
 @admin_bp.route('/admin', methods=['POST'])
 @jwt_required()
 def admin():
     current_user_id = get_jwt_identity()
 
-    if current_user_id != TARGET_USER_ID:
+    if (current_user_id != TARGET_USER_ID_1) and (current_user_id != TARGET_USER_ID_2):
         return 403
 
     data = request.get_json()
