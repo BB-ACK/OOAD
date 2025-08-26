@@ -15,6 +15,8 @@ db = client["feelGood"] # feelGood 이라는 이름의 데이터베이스 가져
 users_col = db["users"] # users 이라는 이름의 컬렉션(=테이블) 가져오기(없으면 생성)
 places_col = db["places"]
 courses_col = db["courses"]
+places_temporary = db["places_temporary"]
+coures_temporary = db["coures_temporary"]
 
 
 # seed 데이터 등록하는 함수
