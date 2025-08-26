@@ -250,9 +250,6 @@ function AdminPage() {
                     <p>
                       <strong>등록자:</strong> {place.created_by || "알 수 없음"}
                     </p>
-                    <p>
-                      <strong>등록일:</strong> {place.created_at || "알 수 없음"}
-                    </p>
                   </div>
                 </div>
               </div>
