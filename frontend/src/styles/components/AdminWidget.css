@@ -1,0 +1,52 @@
+.admin-widget {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.admin-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
+  transition: all 0.2s ease;
+}
+
+.admin-button:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+}
+
+.admin-icon {
+  font-size: 1rem;
+}
+
+.admin-text {
+  font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+  .admin-widget {
+    top: 15px;
+    right: 15px;
+  }
+
+  .admin-button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .admin-text {
+    display: none;
+  }
+}
