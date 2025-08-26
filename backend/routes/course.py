@@ -75,25 +75,26 @@ def add_course():
     # 임시 DB에 추가
     coures_temporary.insert_one({"course_name": new_course_name, "place_list": place_list, "description": description, "cost": cost})
 
+    # 시드에 추가는 배포 후에는 필요 없어져서 사용하지 않음
     # seed에 추가
-    new_course = {
-        "course_name" : new_course_name,
-        "place_list" : place_list,
-        "description" : description,
-        "cost" : cost
-    }
+    # new_course = {
+    #     "course_name" : new_course_name,
+    #     "place_list" : place_list,
+    #     "description" : description,
+    #     "cost" : cost
+    # }
 
-    current_path = Path(__file__).resolve() # 현재 파일 위치
-    parent_path = current_path.parents[1] # 상위 폴더로 한 칸 이동 (routes → backend)
-    target_file = parent_path / 'seed_course.json' # 접근하려는 파일 경로
+    # current_path = Path(__file__).resolve() # 현재 파일 위치
+    # parent_path = current_path.parents[1] # 상위 폴더로 한 칸 이동 (routes → backend)
+    # target_file = parent_path / 'seed_course.json' # 접근하려는 파일 경로
 
-    with open(target_file, 'r', encoding='utf-8') as f:
-        current_courses = json.load(f)
+    # with open(target_file, 'r', encoding='utf-8') as f:
+    #     current_courses = json.load(f)
 
-    current_courses.append(new_course)
+    # current_courses.append(new_course)
 
-    with open(target_file, 'w', encoding='utf-8') as f:
-        json.dump(current_courses, f, ensure_ascii=False, indent=2, separators=(',', ': '))
+    # with open(target_file, 'w', encoding='utf-8') as f:
+    #     json.dump(current_courses, f, ensure_ascii=False, indent=2, separators=(',', ': '))
 
     return jsonify(msg="코스추가 성공"), 200
 
