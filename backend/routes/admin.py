@@ -23,7 +23,7 @@ def admin():
 
     # 최초 접속 시 모든 데이터 주기
     if access_type == 'first':
-        places = list(places_temporary.find({}, {"_id": 0,"place_name": 1, "point": 1, "tags": 1, "addresss": 1, "menu": 1, "description": 1})) # 원하는 필드만 포함해서 가져오기 (1은 포함, 0은 제외 의미)
+        places = list(places_temporary.find({}, {"_id": 0,"place_name": 1, "point": 1, "tags": 1, "address": 1, "menu": 1, "description": 1})) # 원하는 필드만 포함해서 가져오기 (1은 포함, 0은 제외 의미)
         return jsonify(places), 200
     
     if access_type == "yes":
@@ -34,24 +34,24 @@ def admin():
 
         places_temporary.delete_one({"place_name": key}) # 임시 db에서 삭제하기
 
-        places = list(places_temporary.find({}, {"_id": 0,"place_name": 1, "point": 1, "tags": 1, "addresss": 1, "menu": 1, "description": 1})) # 원하는 필드만 포함해서 가져오기 (1은 포함, 0은 제외 의미)
+        places = list(places_temporary.find({}, {"_id": 0,"place_name": 1, "point": 1, "tags": 1, "address": 1, "menu": 1, "description": 1})) # 원하는 필드만 포함해서 가져오기 (1은 포함, 0은 제외 의미)
         return jsonify(places), 200
 
     if access_type == "no":
         key = data.get('key')
         places_temporary.delete_one({"place_name": key}) # 임시 db에서 삭제하기
     
-        places = list(places_temporary.find({}, {"_id": 0,"place_name": 1, "point": 1, "tags": 1, "addresss": 1, "menu": 1, "description": 1})) # 원하는 필드만 포함해서 가져오기 (1은 포함, 0은 제외 의미)
+        places = list(places_temporary.find({}, {"_id": 0,"place_name": 1, "point": 1, "tags": 1, "address": 1, "menu": 1, "description": 1})) # 원하는 필드만 포함해서 가져오기 (1은 포함, 0은 제외 의미)
         return jsonify(places), 200
 
     # 검색 시 검색어를 뽑아서 DB검색에 사용
     if access_type == 'search':
         key = data.get('key')
-        places = list(places_temporary.find({"place_name": key}, {"_id": 0,"place_name": 1, "point": 1, "tags": 1, "addresss": 1, "menu": 1, "description": 1}))
+        places = list(places_temporary.find({"place_name": key}, {"_id": 0,"place_name": 1, "point": 1, "tags": 1, "address": 1, "menu": 1, "description": 1}))
         return jsonify(places), 200
 
     # TAG 검색 시 tag를 뽑아서 DB검색에 사용.
     if access_type == 'tag':
         key = data.get('key')
-        places = list(places_temporary.find({"tags": key}, {"_id": 0,"place_name": 1, "point": 1, "tags": 1, "addresss": 1, "menu": 1, "description": 1})) # MongDB에서는 리스트형태 필드를 단일값으로 검색 가능함.
+        places = list(places_temporary.find({"tags": key}, {"_id": 0,"place_name": 1, "point": 1, "tags": 1, "address": 1, "menu": 1, "description": 1})) # MongDB에서는 리스트형태 필드를 단일값으로 검색 가능함.
         return jsonify(places), 200
