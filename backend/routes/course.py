@@ -7,7 +7,7 @@ from pathlib import Path # 경로 표현을 위한 라이브러리
 course_bp = Blueprint('course', __name__)
 
 @course_bp.route('/course', methods=['POST'])
-@jwt_required()
+# @jwt_required()
 def course_page():
     data = request.get_json()
     access_type = data.get("access_type")
