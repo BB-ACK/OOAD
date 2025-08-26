@@ -69,8 +69,8 @@ export async function registerUser(email, username, password, confirmPassword) {
   }
 }
 
-// 장소 데이터 가져오기 함수 추가
-export async function fetchPlaces(accessType, key = "") {
+// 장소 데이터 가져오기 함수 (메인 DB와 임시 DB 모두 사용)
+export async function fetchPlaces(accessType, key = "", isTemp = false) {
   // 토큰 가져오기
   const token = localStorage.getItem("auth_token")
 
@@ -79,10 +79,13 @@ export async function fetchPlaces(accessType, key = "") {
   // }
 
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/home`, {
+    // 임시 DB용과 메인 DB용 엔드포인트 구분
+    const endpoint = isTemp ? `${process.env.REACT_APP_API_URL}/admin` : `${process.env.REACT_APP_API_URL}/home`
+
+    const response = await fetch(endpoint, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
