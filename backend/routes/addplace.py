@@ -18,8 +18,6 @@ def add_place():
     tags = data.get("tags")
     description = data.get("description")
 
-    current_user_id = get_jwt_identity()
-
     # 중복검사
     if places_col.find_one({"address" : address}):
         return jsonify(msg="중복되는 장소"), 200
@@ -28,7 +26,7 @@ def add_place():
     # places_col.insert_one(({"place_name" : place_name, "point" : point, "tags" : tags, "address": address, "menu" : menu, "description" : description, "comment" : []}))
     
     # 실제 db가 아닌 임시 db에 추가
-    places_temporary.insert_one(({"place_name" : place_name, "point" : point, "tags" : tags, "address": address, "menu" : menu, "description" : description, "comment" : [], "created_by" : current_user_id}))
+    places_temporary.insert_one(({"place_name" : place_name, "point" : point, "tags" : tags, "address": address, "menu" : menu, "description" : description, "comment" : []}))
 
     # if places_col.find_one({"place_name": place_name}): # 디버깅
     #     print("성공")
