@@ -11,6 +11,7 @@ from routes.home import home_bp
 from routes.addplace import addplace_bp
 from routes.selectplace import selectplace_bp
 from routes.course import course_bp
+from routes.admin import admin_bp
 from db import insert_seed_data  # seed 함수 import
 
 # .env파일에서 설정 불러오기 by os
@@ -24,6 +25,7 @@ app.register_blueprint(home_bp, url_prefix="/")
 app.register_blueprint(addplace_bp, url_prefix="/")
 app.register_blueprint(selectplace_bp, url_prefix="/")
 app.register_blueprint(course_bp, url_prefix="/")
+app.register_blueprint(admin_bp, url_prefix="/")
 
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)

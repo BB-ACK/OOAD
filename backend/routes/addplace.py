@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
 import json
 from db import places_col
+from db import places_temporary
 from pathlib import Path # 경로 표현을 위한 라이브러리
 
 addplace_bp = Blueprint('addplace', __name__)
@@ -22,8 +23,11 @@ def add_place():
         return jsonify(msg="중복되는 장소"), 200
 
     # 실제 db에 추가
-    places_col.insert_one(({"place_name" : place_name, "point" : point, "tags" : tags, "address": address, "menu" : menu, "description" : description, "comment" : []}))
+    # places_col.insert_one(({"place_name" : place_name, "point" : point, "tags" : tags, "address": address, "menu" : menu, "description" : description, "comment" : []}))
     
+    # 실제 db가 아닌 임시 db에 추가
+    places_temporary.insert_one(({"place_name" : place_name, "point" : point, "tags" : tags, "address": address, "menu" : menu, "description" : description, "comment" : []}))
+
     # if places_col.find_one({"place_name": place_name}): # 디버깅
     #     print("성공")
 
