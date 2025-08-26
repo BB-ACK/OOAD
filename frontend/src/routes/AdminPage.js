@@ -49,6 +49,7 @@ function AdminPage() {
     try {
       setIsLoading(true)
       const data = await fetchPlaces("first", "", true) // 임시 DB에서 모든 장소 가져오기
+
       setPendingPlaces(data)
     } catch (error) {
       setError("대기 중인 장소 목록을 불러오는데 실패했습니다.")
@@ -210,8 +211,9 @@ function AdminPage() {
                 </div>
 
                 <div className="place-details">
+
                   <p className="place-address">
-                    <strong>주소:</strong> {place.address}
+                    <strong>주소:</strong> {place.address || place.addresss || "주소 정보 없음"}
                   </p>
 
                   {place.tags && place.tags.length > 0 && (
@@ -246,11 +248,7 @@ function AdminPage() {
                     </p>
                   )}
 
-                  <div className="place-meta">
-                    <p>
-                      <strong>등록자:</strong> {place.created_by || "알 수 없음"}
-                    </p>
-                  </div>
+                  
                 </div>
               </div>
             ))}
