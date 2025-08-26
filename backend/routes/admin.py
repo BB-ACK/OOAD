@@ -32,6 +32,8 @@ def admin():
         document_to_copy.pop('_id', None)
         places_col.insert_one(document_to_copy)
 
+        places_temporary.delete_one({"place_name": key}) # 임시 db에서 삭제하기
+
         places = list(places_temporary.find({}, {"_id": 0,"place_name": 1, "point": 1, "tags": 1})) # 원하는 필드만 포함해서 가져오기 (1은 포함, 0은 제외 의미)
         return jsonify(places), 200
 
