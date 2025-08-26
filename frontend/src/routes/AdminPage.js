@@ -246,11 +246,6 @@ function AdminPage() {
                     </p>
                   )}
 
-                  <div className="place-meta">
-                    <p>
-                      <strong>등록자:</strong> {place.created_by || "알 수 없음"}
-                    </p>
-                  </div>
                 </div>
               </div>
             ))}
