@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
-from db import places_col, courses_col
+from db import places_col, courses_col, coures_temporary
 import json
 from pathlib import Path # 경로 표현을 위한 라이브러리
 
@@ -45,7 +45,7 @@ def course_page():
 
 
 @course_bp.route('/addcourse', methods=['POST'])
-@jwt_required()
+# @jwt_required()
 def add_course():
     data = request.get_json()
     new_course_name = data.get("course_name")
@@ -70,7 +70,10 @@ def add_course():
         }), 400  # 클라이언트 잘못으로 간주하여 400 Bad Request
 
     # 실제 DB에 추가
-    courses_col.insert_one({"course_name": new_course_name, "place_list": place_list, "description": description, "cost": cost})
+    # courses_col.insert_one({"course_name": new_course_name, "place_list": place_list, "description": description, "cost": cost})
+
+    # 임시 DB에 추가
+    coures_temporary.insert_one({"course_name": new_course_name, "place_list": place_list, "description": description, "cost": cost})
 
     # seed에 추가
     new_course = {
