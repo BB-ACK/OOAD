@@ -13,8 +13,8 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={<Home />} />
         <Route path="/course" element={<Course />} />
-        {/* 루트 경로는 인증 상태에 따라 홈 또는 로그인으로 리다이렉트 */}
-        <Route path="/" element={<Navigate to="/login" replace />} />
+        {/* 루트 경로는 인증 상태에 따라 홈 또는 홈으로 리다이렉트 */}
+        <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>

@@ -23,10 +23,10 @@ function Course() {
   // 인증 상태 확인 및 카카오맵 초기화
   useEffect(() => {
     // 인증되지 않은 사용자는 로그인 페이지로 리다이렉트
-    if (!isAuthenticated()) {
-      navigate("/login")
-      return
-    }
+    // if (!isAuthenticated()) {
+    //   navigate("/login")
+    //   return
+    // }
 
     // 카카오맵 스크립트 로드
     const script = document.createElement("script")
