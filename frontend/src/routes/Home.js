@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import Sidebar from "../components/Sidebar"
 import AddPlaceModal from "../components/AddPlaceModal"
 import PlaceDetailModal from "../components/PlaceDetailModal"
+import AdminWidget from "../components/AdminWidget"
 import { isAuthenticated } from "../utils/auth"
 import { fetchPlaces, selectplace } from "../utils/api"
 import { restaurantMarkerUrl } from "../assets/marker-restaurant"
@@ -246,6 +247,7 @@ function Home() {
   return (
     <>
       <Sidebar onAddPlace={handleOpenAddPlaceModal} />
+      <AdminWidget />
       <div className="home-container">
         <div className="home-header">
           <div className="header-top">
@@ -265,6 +267,7 @@ function Home() {
 
         {/* 카테고리 필터 버튼 */}
         <div className="category-filter">
+          <h3 className="category-title">카테고리</h3>
           <div className="category-buttons">
             {categories.map((category) => (
               <button

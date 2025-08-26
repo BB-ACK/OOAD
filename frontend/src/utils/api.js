@@ -74,9 +74,9 @@ export async function fetchPlaces(accessType, key = "") {
   // 토큰 가져오기
   const token = localStorage.getItem("auth_token")
 
-  if (!token) {
-    throw new Error("인증 토큰이 존재하지 않습니다. 로그인 후 이용해 주세요.")
-  }
+  // if (!token) {
+  //   throw new Error("인증 토큰이 존재하지 않습니다. 로그인 후 이용해 주세요.")
+  // }
 
   try {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/home`, {
@@ -107,9 +107,9 @@ export async function addPlace(placeData) {
   // 토큰 가져오기
   const token = localStorage.getItem("auth_token")
 
-  if (!token) {
-    throw new Error("인증 토큰이 존재하지 않습니다. 로그인 후 이용해 주세요.")
-  }
+  // if (!token) {
+  //   throw new Error("인증 토큰이 존재하지 않습니다. 로그인 후 이용해 주세요.")
+  // }
   try {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/addplace`, {
       method: "POST",
@@ -136,9 +136,9 @@ export async function selectplace(placename) {
   // 토큰 가져오기
   const token = localStorage.getItem("auth_token")
 
-  if (!token) {
-    throw new Error("인증 토큰이 존재하지 않습니다. 로그인 후 이용해 주세요.")
-  }
+  // if (!token) {
+  //   throw new Error("인증 토큰이 존재하지 않습니다. 로그인 후 이용해 주세요.")
+  // }
   
   try {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/selectplace`, {
@@ -169,9 +169,9 @@ export async function addcomment(placecomment) {
   // 토큰 가져오기
   const token = localStorage.getItem("auth_token")
 
-  if (!token) {
-    throw new Error("인증 토큰이 존재하지 않습니다. 로그인 후 이용해 주세요.")
-  }
+  // if (!token) {
+  //   throw new Error("인증 토큰이 존재하지 않습니다. 로그인 후 이용해 주세요.")
+  // }
   
   try {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/selectplace/comment`, {
@@ -200,9 +200,9 @@ export async function fetchCourses(accessType, key ="") {
   // 토큰 가져오기
   const token = localStorage.getItem("auth_token")
 
-  if (!token) {
-    throw new Error("인증 토큰이 존재하지 않습니다. 로그인 후 이용해 주세요.")
-  }
+  // if (!token) {
+  //   throw new Error("인증 토큰이 존재하지 않습니다. 로그인 후 이용해 주세요.")
+  // }
 
   try {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/course`, {
@@ -234,9 +234,9 @@ export async function addcourse(courseData) {
   // 토큰 가져오기
   const token = localStorage.getItem("auth_token")
 
-  if (!token) {
-    throw new Error("인증 토큰이 존재하지 않습니다. 로그인 후 이용해 주세요.")
-  }
+  // if (!token) {
+  //   throw new Error("인증 토큰이 존재하지 않습니다. 로그인 후 이용해 주세요.")
+  // }
   
   try {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/addcourse`, {
